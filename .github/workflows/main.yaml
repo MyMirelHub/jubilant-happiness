@@ -1,0 +1,39 @@
+name: main
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      -
+        name: Checkout
+        uses: actions/checkout@v3
+      -
+        name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: eu-west-3
+      - 
+        name: Login to AWS ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+      
+      #- Unable to implement due to permissions - original idea was to do image based promotion on AWS CLI https://docs.aws.amazon.com/AmazonECR/latest/userguide/image-retag.html
+      #  ...user/mirisa is not authorized to perform: ecr:BatchGetImage on resource: arn:aws:ecr:eu-west-3... because no identity-based policy allows the ecr:BatchGetImage action
+      #  name: Retag ECR image
+      #  run: |
+      #    docker pull 303981612052.dkr.ecr.eu-west-3.amazonaws.com/mirelperk:rc
+      #    docker tag 303981612052.dkr.ecr.eu-west-3.amazonaws.com/mirelperk:rc 303981612052.dkr.ecr.eu-west-3.amazonaws.com/mirelperk:latest
+      #    docker push 303981612052.dkr.ecr.eu-west-3.amazonaws.com/mirelperk:latest
+
+      - # Instead we are build and pushing the image to ECR
+        name: build and push image
+        run: |
+          docker build -t 303981612052.dkr.ecr.eu-west-3.amazonaws.com/mirelperk:main .
+          docker push 303981612052.dkr.ecr.eu-west-3.amazonaws.com/mirelperk:main
