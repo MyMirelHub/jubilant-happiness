@@ -6,6 +6,8 @@ This is the code to deploy 2 instances of a flask app on an ecs fargate instance
 
 **What I Wanted to do**
 
+![cicd](https://github.com/MyMirelHub/jubilant-happiness/blob/main/images/cicd.jpg?raw=true)
+
 Promote image artifacts - The pipeline code is handled by github actions with the manifests localted in `.github/workflows` folder. I wanted to set up a pipeline where the container artifact is only built once and promoted through the steps. This was not possible due to: 
 - Github actions not persisting artifacts through workflows 
 - Not being able to do it with ECR due to missing permissions `mirisa is not authorized to perform: ecr:BatchGetImage` 
@@ -14,9 +16,9 @@ This is how I would have done it otherwise https://docs.aws.amazon.com/AmazonECR
   
 Force new deployment on ecs cluster - I didn't get to this stage but with more time I would have liked to investigate if I can 
 1. Force new deployments of the ecs service `aws ecs update-service --cluster <my_cluster> --service <my_service> --force-new-deployment` 
-1.  Automatically exporting the image tag and have it pulled by terraform, so it could redeploy. New image tags would have to be unique for this to work
-1. Create a new task definition and clean up the old one
-1. There are more options discussed here. https://stackoverflow.com/questions/34840137/how-do-i-deploy-updated-docker-images-to-amazon-ecs-tasks
+2.  Automatically exporting the image tag and have it pulled by terraform, so it could redeploy. New image tags would have to be unique for this to work
+3. Create a new task definition and clean up the old one
+4. There are more options discussed here. https://stackoverflow.com/questions/34840137/how-do-i-deploy-updated-docker-images-to-amazon-ecs-tasks
 
 **End Result**
 - An image which builds the container
@@ -205,5 +207,5 @@ Unfortunately I was not able to deploy this end-to-end due to a permissions issu
 - A combination of a public private subnets and following best practices from AWS https://aws.amazon.com/de/blogs/compute/task-networking-in-aws-fargate/
 
 
-![MarineGEO circle logo]([/assets/img/MarineGEO_logo.png](https://d2908q01vomqb2.cloudfront.net/1b6453892473a467d07372d45eb05abc2031647a/2018/01/26/Slide5-1024x647.png) "MarineGEO logo")
+![AWS](https://d2908q01vomqb2.cloudfront.net/1b6453892473a467d07372d45eb05abc2031647a/2018/01/26/Slide5-1024x647.png)
 
