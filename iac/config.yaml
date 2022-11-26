@@ -1,0 +1,7 @@
+common: 
+  name: mirelperk
+  container_port: 5000
+  region: eu-west-3
+
+ecs:
+  image: 303981612052.dkr.ecr.eu-west-3.amazonaws.com/mirelperk:main

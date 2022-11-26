@@ -1,4 +1,5 @@
 provider "aws" {
+  region = local.config.common.region
 }
 
 terraform {
