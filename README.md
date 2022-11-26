@@ -189,7 +189,9 @@ resource "aws_security_group" "ecs_tasks" {
 }
 ```
 **End-result**
+
 Unfortunately I was not able to deploy this end-to-end due to a permissions issue of not being able to assign the executor role. This is possibly due to having mistankenly commited my AWS credentials to git and getting caught and locked out by the account police bots. 
+
 ---
 
 ## Production Considerations
