@@ -21,5 +21,6 @@ RUN python setup.py install
 
 USER user
 ENV FLASK_APP=./hello
+EXPOSE 5000
 
-ENTRYPOINT [ "flask", "run" ]
+ENTRYPOINT [ "flask", "run", "--host=0.0.0.0" ]
